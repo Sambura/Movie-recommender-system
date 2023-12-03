@@ -1,5 +1,8 @@
+from pathlib import Path
 from torch import nn
+import pickle
 import torch
+import os
 
 class SimpleRegressorModelV1(nn.Module):
     '''
@@ -17,3 +20,11 @@ class SimpleRegressorModelV1(nn.Module):
         u_emb = self.user_emb(users)
         i_emb = self.item_emb(items)
         return self.regressor(torch.cat([u_emb, i_emb], dim=1))
+    
+    def save_model(self, path):
+        if not os.path.exists(path):
+            export_path_parent = Path(path).parent.absolute()
+            os.makedirs(export_path_parent, exist_ok=True)
+
+        with open(path, 'wb') as file:
+            pickle.dump(self, file, pickle.HIGHEST_PROTOCOL)

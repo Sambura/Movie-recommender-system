@@ -36,9 +36,9 @@ def train_rsm(model: nn.Module,
                 if train: optimizer.zero_grad()
                 users, items, ratings = users.to(device), items.to(device), ratings.to(device)
 
-                output = model(users, items)
+                output = model(users, items).view(-1)
 
-                loss = loss_fn(output.view(-1), ratings)
+                loss = loss_fn(output, ratings)
                 total_loss += loss.item() * len(ratings)
                 total += len(ratings)
 
@@ -55,4 +55,19 @@ def train_rsm(model: nn.Module,
         train_losses.append(train_loop(train_dataloader, train=True))
         val_losses.append(train_loop(val_dataloader, train=False))
 
+    print(f'Training is over. Last train/validation loss: {train_losses[-1]:0.3f} / {val_losses[-1]:0.3f}')
+
     return train_losses, val_losses
+
+class BPRLoss(nn.Module):
+    '''WIP'''
+    def __init__(self):
+        super().__init__()
+
+    def forward(self, scores_ui, scores_uj):
+        # scores_ui and scores_uj are the predicted scores for positive and negative items
+        # Calculate the BPR loss
+        loss = -torch.mean(torch.log(torch.sigmoid(scores_ui - scores_uj)))
+        
+        
+        return loss

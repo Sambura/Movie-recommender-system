@@ -7,6 +7,7 @@ This project focuses on creating an ML movie recommender system based on [MovieL
 
 ## Repo structure:
 
+* `benchmark/`: contains scripts for evaluating trained models
 * `notebooks/`: contains notebooks for data exploration, visualization, and model training
 * `reports/`: reports regarding the work performed
 * `src/`: python source code
@@ -16,3 +17,12 @@ This project focuses on creating an ML movie recommender system based on [MovieL
 
 ## How to use
 
+A short overview of how to use the code in this repo
+
+### Train a model
+
+You can run `src/models/run_training.py` script to launch the training process. Alternatively you can use `notebooks/0.0-draft.ipynb` notebook.
+
+### Evaluation
+
+Use `benchmark/evaluate.py` script to evaluate a trained model's performance.
