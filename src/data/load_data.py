@@ -47,12 +47,26 @@ def get_unique_num(key: str, path: str=None) -> int:
     Returns:
     The number of unique entries in the given dataset column
     '''
-    if path is None: path = inspect.signature(read_data_csv).parameters['path'].default
-    return len(read_data_csv(path)[key].unique())
+    if path is None: path = inspect.signature(read_data).parameters['path'].default
+    return len(read_data(path)[key].unique())
 
-def read_data_csv(path: str='data/raw/ml-100k/u.data') -> pd.DataFrame:
+def read_data(path: str='data/raw/ml-100k/u.data') -> pd.DataFrame:
     '''Read the tsv file with user_id, item_id, rating and timestamp columns into a dataframe'''
     return pd.read_csv(path, sep='\t', names=['user_id', 'item_id', 'rating', 'timestamp'])
+
+def read_user_data(path: str='data/raw/ml-100k/u.user') -> pd.DataFrame:
+    '''Read the file with user_id, age, gender, occupation and zip_code columns into a dataframe'''
+    return pd.read_csv(path, sep='|', names=['user_id', 'age', 'gender', 'occupation', 'zip_code'])
+
+def read_item_data(path: str='data/raw/ml-100k/u.item', drop_columns: bool=False) -> pd.DataFrame:
+    '''Read the file with movie_id, title, release_date, video_release_date, url, and 19 genres columns into a dataframe'''
+    item_data = pd.read_csv(path, sep='|', names=['movie_id', 'title', 'release_date', 'video_release_date', 'url', *[str(x) for x in range(19)]])
+    if drop_columns: item_data.drop(columns=['video_release_date', 'url', 'title'], errors='ignore', inplace=True)
+    return drop_columns
+
+def get_genre_names(path: str='data/raw/ml-100k/u.genre') -> pd.DataFrame:
+    '''Read the file with genre_name and genre_id columns into a dataframe'''
+    return pd.read_csv(path, sep='|', names=['genre_name', 'genre_id'])
 
 def get_crossval_datasets(
         path: str='data/raw/ml-100k/', 
@@ -75,7 +89,7 @@ def get_crossval_datasets(
     '''
     return [
         (
-            DataLoader(MovieRatingsDataset(read_data_csv(os.path.join(path, train_format % (i + 1)))), batch_size, shuffle=True),
-            DataLoader(MovieRatingsDataset(read_data_csv(os.path.join(path, val_format % (i + 1)))), batch_size, shuffle=False)
+            DataLoader(MovieRatingsDataset(read_data(os.path.join(path, train_format % (i + 1)))), batch_size, shuffle=True),
+            DataLoader(MovieRatingsDataset(read_data(os.path.join(path, val_format % (i + 1)))), batch_size, shuffle=False)
         ) for i in range(count)
     ]
