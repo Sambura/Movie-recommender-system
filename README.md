@@ -14,6 +14,7 @@ This project focuses on creating an ML movie recommender system based on [MovieL
     - `src/data/`: code for loading / processing data
     - `src/models/`: code for ML models and their training
     - `src/utils/`: util code used in other modules
+* `references.md`: List of used references
 
 ## How to use
 
@@ -25,7 +26,11 @@ Use python script at `src/data/download_data.py` to automatically download and e
 
 ### Train a model
 
-You can run `src/models/run_training.py` script to launch the training process. Alternatively you can use `notebooks/0.0-draft.ipynb` notebook.
+You can run `src/models/run_training.py` script to launch the training process. Alternatively you can use `notebooks/2.0-training.ipynb` notebook. Training of simple models takes not more than 10 minutes for 5-fold cross-validation run on GPU.
+
+### Pretrained models
+
+You can also get pretrained model weights from [Github releases](https://github.com/Sambura/Movie-recommender-system/releases)
 
 ### Evaluation
 
