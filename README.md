@@ -19,6 +19,10 @@ This project focuses on creating an ML movie recommender system based on [MovieL
 
 A short overview of how to use the code in this repo
 
+### Download the dataset
+
+Use python script at `src/data/download_data.py` to automatically download and extract the dataset to the default destination
+
 ### Train a model
 
 You can run `src/models/run_training.py` script to launch the training process. Alternatively you can use `notebooks/0.0-draft.ipynb` notebook.

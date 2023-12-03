@@ -62,7 +62,7 @@ def read_user_data(path: str='data/raw/ml-100k/u.user') -> pd.DataFrame:
 
 def read_item_data(path: str='data/raw/ml-100k/u.item', drop_columns: bool=False) -> pd.DataFrame:
     '''Read the file with movie_id, title, release_date, video_release_date, url, and 19 genres columns into a dataframe'''
-    item_data = pd.read_csv(path, sep='|', names=['movie_id', 'title', 'release_date', 'video_release_date', 'url', *[str(x) for x in range(19)]])
+    item_data = pd.read_csv(path, sep='|', names=['movie_id', 'title', 'release_date', 'video_release_date', 'url', *[str(x) for x in range(19)]], encoding='latin-1')
     if drop_columns: item_data.drop(columns=['video_release_date', 'url', 'title'], errors='ignore', inplace=True)
     return item_data
 
