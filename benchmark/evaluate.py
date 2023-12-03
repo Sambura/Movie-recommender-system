@@ -4,7 +4,7 @@ import pickle
 from src.data.load_data import get_crossval_datasets, create_dataloaders
 from src.models.evaluation import compute_metrics
 
-model_path = 'models/model-32.pickle'
+model_path = 'models/simple_regressor_v1/model-128-split-1.pickle'
 print(f'Evaluating model: {model_path}')
 
 val_dataloader = create_dataloaders(get_crossval_datasets())[4][1]
